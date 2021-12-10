@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashboard-big-data
+  namespace: platform-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-dashboard-big-data
+  template:
+    metadata:
+      labels:
+        app: app-dashboard-big-data
+    spec:
+      containers:
+      - image: registry.cn-shenzhen.aliyuncs.com/syzy/dashboard:1.0.0
+        name: dashboard-big-data
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      imagePullSecrets:
+        - name: syzy-secrets
+      schedulerName: default-scheduler
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-dashboard-big-data
+  namespace: platform-test
+  labels:
+    app: app-dashboard-big-data
+spec:
+  ports:
+    - name: http-80
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+  selector:
+    app: app-dashboard-big-data
