@@ -14,10 +14,10 @@ spec:
         app: app-dashboard-big-data
     spec:
       containers:
-      - image: registry.cn-shenzhen.aliyuncs.com/syzy/dashboard:1.0.0
+      - image: registry.cn-shenzhen.aliyuncs.com/syzy/dashboard:1.0.1
         name: dashboard-big-data
         ports:
-        - containerPort: 3000
+        - containerPort: 80
           protocol: TCP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
@@ -39,6 +39,6 @@ spec:
     - name: http-80
       protocol: TCP
       port: 80
-      targetPort: 3000
+      targetPort: 80
   selector:
     app: app-dashboard-big-data
